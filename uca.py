@@ -58,7 +58,7 @@ def uca(config, debug = False, verbose = False):
             "geometry":{
                 "arc":{
                     "distance_m": 2.16,
-                    "sample_count": 121,
+                    "sample_count": 49,
                     "start_rad":0,
                     "stop_rad": np.pi/2,
                     "bounding_box":{
@@ -69,7 +69,7 @@ def uca(config, debug = False, verbose = False):
                     },
                 "line":{
                     "distance_m": 2.16,
-                    "sample_count": 121,
+                    "sample_count": 49,
                     "start_m": -2,
                     "stop_m":2,
                     "bounding_box":{
@@ -84,12 +84,12 @@ def uca(config, debug = False, verbose = False):
                     "x":{
                             "start_m":-1.092/2.,
                             "stop_m":1.092/2.,
-                            "count":33
+                            "count":7
                         },
                     "y":{
                             "start_m":-1.408/2.,
                             "stop_m":1.408/2.,
-                            "count":29
+                            "count":7
                         },
                     "bounding_box":{
                             "x_m": 2,
@@ -99,7 +99,7 @@ def uca(config, debug = False, verbose = False):
                 },
                 "circle":{
                     "distance_m": 2.16,
-                    "sample_count": 121,
+                    "sample_count": 49,
                     "radius_m": 0.5,
                     "bounding_box":{
                             "x_m": 2,
@@ -166,7 +166,17 @@ def uca(config, debug = False, verbose = False):
         for phi in phi_list:    
             pos = vec3()
             pos.set_cylindrical(geo['radius_m'],phi,rx_z)
-            line_rx.append(pos)    
+            line_rx.append(pos)   
+            
+    elif (scan_type == 'arc'):
+        
+        theta_list= np.linspace(geo['start_rad'],geo['stop_rad'],num_rx)
+        for theta in theta_list:    
+            pos = vec3(np.sin(theta) * rx_z,
+                       0,
+                       np.cos(theta) * rx_z)
+            line_rx.append(pos)               
+            
             
     elif (scan_type == 'rect'):
         
@@ -247,7 +257,7 @@ def uca(config, debug = False, verbose = False):
         
 if __name__ == "__main__":
     
-    for geometry in ['line','rect','circle']:
+    for geometry in ['arc','line','rect','circle']:
     
         config = {
                 'filename': 'test',
