@@ -253,7 +253,8 @@ def uca(config, debug = False, verbose = False):
         np.savez(filename,
                  lamps = lamps0,
                  lphases = lphases0,
-                 line_rx = line_rx)
+                 line_rx = line_rx,
+                 geometry = scan_type)
         
 if __name__ == "__main__":
     
